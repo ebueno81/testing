@@ -36,6 +36,7 @@ public class CloudStorageService {
     @Autowired
     private ClusterDataIntegrationService clusterDataIntegrationService;
 
+    // upload y processamos el archivo
     public String uploadAndProcessFile(MultipartFile file, String fileName) throws IOException, InterruptedException, NoSuchAlgorithmException, KeyManagementException {
         // Subir el archivo a GCS
         BlobId blobId = BlobId.of(bucketName, fileName);
@@ -54,6 +55,7 @@ public class CloudStorageService {
         return "Archivo subido y el procesamiento se ha iniciado en segundo plano: " + fileName;
     }
 
+    // Proceso de Excel archivo desde GCP
     private void processExcelFileFromGCS(String objectName) throws IOException, InterruptedException, NoSuchAlgorithmException, KeyManagementException {
         Blob blob = storage.get(BlobId.of(bucketName, objectName));
         try (InputStream inputStream = new ByteArrayInputStream(blob.getContent());
@@ -82,6 +84,7 @@ public class CloudStorageService {
         }
     }
 
+    // Crear Cluster Data desde Fila
     private ClusterData createClusterDataFromRow(XSSFRow row) {
         ClusterData clusterData = new ClusterData();
         clusterData.setEmail(row.getCell(0).getStringCellValue());

@@ -93,6 +93,7 @@ public class CloudStorageService {
         return clusterData;
     }
 
+    // se debe aplicar el scheudeler
     // Método que se ejecutará automáticamente cada minuto
     @Scheduled(fixedRate = 30000) // Ejecuta cada 60000 ms (1 minuto)
     public void logExecution() {
